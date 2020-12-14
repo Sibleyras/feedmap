@@ -1,3 +1,9 @@
 # Let npm install deal with those
 node_modules/
 package-lock.json
+
+# Sensitive config file
+config/
+
+# Play with your own images
+public/images/
