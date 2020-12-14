@@ -1,0 +1,27 @@
+extends layout
+
+block content
+    h2 Bienvenue SuperAdmin #{user.username}.
+    div.row.p-2
+        each u in userlist
+            .col-4
+                p #{u.username}
+            .col-1
+                if u.editor
+                    button(type='button' class='btn btn-secondary' onclick='$.post("/login/switchright", {username:"'+ u.username +'"}, function(data){window.location.reload(true)})') E
+                else
+                    button(type='button' class='btn btn-secondary' onclick='$.post("/login/switchright", {username:"'+ u.username +'"}, function(data){window.location.reload(true)})') x
+            .col-1
+                if u.superadmin
+                    p S
+                else
+                    p x
+            .col-4
+                p #{user.last_login.toDateString()}
+            <hr>
+    .row.p-2
+        .col-12
+            h3 Adding new editor.    
+        div.col-6.col-sm-5.col-md-4.col-lg-3.border
+            include dist/addEditor.html
+

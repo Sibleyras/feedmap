@@ -1,0 +1,40 @@
+<html lang="fr-FR" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    title="Map"
+    <link rel="shortcut icon" type="image/png" href="images/restaurant.png"/>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+
+    link(rel='stylesheet', href='/stylesheets/style.css')
+</head>
+
+<body>
+    <div class="row no-gutters d-flex">
+        <div class="col-12" id="mapcanvas">
+            <div id="mapid"></div>
+        </div>
+        <div class="col-6 col-sm-5 col-md-4 col-lg-3 border vh-100 overflow-auto" style="scroll-behavior: smooth; display: none;" id="infocanvas">
+        </div>
+    </div>
+    <button class="switchModeButton btn btn-outline-secondary" onclick="switchViewMode()"> H </button>
+</body>
+</html>
+
+script(src='/javascripts/info.js')
+script(src='/javascripts/infoloader.js')
+script(src='/javascripts/mymap.js')
+if edit
+    script(src='/javascripts/adminScript.js')
+
+</html>

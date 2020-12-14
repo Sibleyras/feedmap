@@ -1,0 +1,109 @@
+body {
+    font-size: 1.2em;
+}
+
+.target {
+    background-color: lightcyan;
+}
+
+.infosrc {
+    text-align: right;
+    font-size: x-small;
+}
+
+.alert {
+    font-size: large;
+    color: purple;
+}
+
+a {
+    color: grey;
+}
+
+.infodate {
+    color: maroon;
+    text-align: right;
+    font-size: medium;
+}
+
+img {
+    max-width: 100%;
+    max-height: auto;
+}
+
+.infoicon {
+    width: 70px;
+}
+
+.formstyle {
+    border: 2px;
+}
+
+.formstyle>div {
+    padding: 2px;
+}
+
+#mapcanvas{
+    height: 100vh;
+}
+
+#mapcanvas>div {
+    width: 100%;
+    height: 100%;
+}
+
+.pickoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 4000;
+    width: 100%;
+    height: 100%;
+}
+
+.selectbox {
+    border: 2px solid black;
+    border-radius: 25px;
+    background-color: white;
+    text-align: center;
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.editoverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 3000;
+    width: 100%;
+    height: 100%;
+}
+
+.editoverlay>div {
+    min-width: 400px;
+    width: 40%;
+    height: auto;
+    vertical-align: middle;
+    background-color: white;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    transform: translate(50%, -50%);
+}
+
+.switchModeButton {
+    position: absolute;
+    right: 20;
+    bottom: 2;
+    z-index: 10000;
+}
