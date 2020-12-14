@@ -1,0 +1,9 @@
+# Do not follow config/ wich contains sensitive data.
+config/
+
+# Let npm install deal with those
+node_modules/
+package-lock.json
+
+# Test with your own images
+public/images/
