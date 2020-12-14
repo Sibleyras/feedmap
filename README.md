@@ -1,15 +1,24 @@
-Download Source
+# FeedMap
 
-Create and setup a database
+A simple map with an editable feed to display information and locate them easily.
 
-Fill config/config.json
+BackEnd: NodeJS, Express.
 
-run ``npm install``
+FrontEnd: Javascript.
 
-run ``npx sequelize-cli db:migrate``
+## Installation
+- Download Source
 
-run ``npx sequelize-cli db:seed:all``
+- Create and setup a database
 
-run ``npm start``
+- Fill config/config.json
 
-go to _localhost:3000/login/chgpwd_, username/password is admin/admin and set a new password for superadmin.
+- run ``npm install``
+
+- run ``npx sequelize-cli db:migrate``
+
+- run ``npx sequelize-cli db:seed:all``
+
+- run ``npm start``
+
+- go to _localhost:3000/login/chgpwd_, username/password is admin/admin and set a new password for superadmin.
