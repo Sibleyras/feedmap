@@ -1,3 +1,5 @@
+var dayslimit = 14; // Print the latest info of the past <dayslimit> days. Value 0 will fetch all.
+
 var mapcanvas = document.getElementById("mapcanvas");
 var infocanvas = document.getElementById("infocanvas");
 var targetInfo; //the current targetted info.
@@ -53,7 +55,7 @@ function refreshInfoList() {
     xhr.send();
 
     xhr = new XMLHttpRequest();
-    xhr.open('GET', "/infos/getinfolist", true);
+    xhr.open('GET', "/infos/getinfolist/"+dayslimit, true);
     xhr.onload = function() {
         // WE PARSE THE JSON RESPONSE FROM THE SERVER
         res = JSON.parse(this.response);

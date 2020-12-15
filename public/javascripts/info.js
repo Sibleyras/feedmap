@@ -400,8 +400,7 @@ class Info {
     supprFromDB() {
         $.ajax({
             url: '/infos/delinfo',
-            type: 'POST',
-            cache: false,
+            type: 'DELETE',
             success: function (data) {
                 refreshInfoList()
                 editoverlay.firstChild.innerHTML = data

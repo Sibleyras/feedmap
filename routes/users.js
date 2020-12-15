@@ -11,6 +11,7 @@ module.exports = (models, passport) => {
     });
   });
 
+  // Treat the login form with passport authenticate.
   router.post('/', async function (req, res, next) {
     passport.authenticate('local', async function (err, user, info) {
       if (!user) {
@@ -38,6 +39,7 @@ module.exports = (models, passport) => {
     });
   });
 
+  // Treat the change password form.
   router.post('/chgpwd', async function (req, res, next) {
     if (!(req.body.username && req.body.password && req.body.newpass && req.body.newpass2)) {
       return res.render('changepassword', {
@@ -79,6 +81,7 @@ module.exports = (models, passport) => {
     });
   });
 
+  // Add a new user with editor rights.
   router.post('/addeditor', async function (req, res, next) {
     if (!req.user || !req.user.superadmin) {
       res.status(403).send("ACCESS DENIED");
@@ -93,6 +96,7 @@ module.exports = (models, passport) => {
     res.redirect('/login/admin')
   });
 
+  // switch the editor right.
   router.post('/switchright', async function (req, res, next) {
     if (!req.user || !req.user.superadmin) {
       res.status(403).send("ACCESS DENIED");
