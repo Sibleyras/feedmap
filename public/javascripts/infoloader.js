@@ -47,7 +47,7 @@ function refreshInfoList() {
 
     // FETCH DATA FROM SERVER VIA AJAX
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', "/infos/getcurrtime", true);
+    xhr.open('GET', "/api/now", true);
     xhr.onload = function() {
         currtime = new Date(this.response.replace(/['"]+/g, ''))
         lancement();
@@ -55,7 +55,7 @@ function refreshInfoList() {
     xhr.send();
 
     xhr = new XMLHttpRequest();
-    xhr.open('GET', "/infos/getinfolist/"+dayslimit, true);
+    xhr.open('GET', "/api/infos/days/"+dayslimit, true);
     xhr.onload = function() {
         // WE PARSE THE JSON RESPONSE FROM THE SERVER
         res = JSON.parse(this.response);

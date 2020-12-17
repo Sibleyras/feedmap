@@ -12,6 +12,7 @@ var bodyParser = require('body-parser');
 
 var models = require('./models/index')(config)
 var indexRouter = require('./routes/index');
+var apiRouter = require('./routes/genapi')(models.sequelize);
 var usersRouter = require('./routes/users')(models, passport);
 var infosRouter = require('./routes/infos')(models);
 
@@ -58,7 +59,8 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/login', usersRouter);
-app.use('/infos', infosRouter);
+app.use('/api', apiRouter);
+app.use('/api', infosRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -67,36 +67,41 @@ module.exports = (sequelize, DataTypes) => {
         })
     }
 
-    // Save a new info or edit an existing one in the database.
+    // Save a new info in the database.
     Info.saveInfo = async function (data, author) {
         // List of editable entry names.
         const uptkeys = ['description', 'latitude', 'longitude', 'marker', 'source', 'image', 'optJSON'];
         var info;
         var msg;
-        if(!data['id'] || data['id'] === 0){
-            info = await Info.create(data)
-            msg = "Info ajoutée";
-        } else {
-            info = await Info.findByPk(data['id'])
-            msg = "Info éditée";
-        }
+        info = await Info.create(data)
         for(let k of uptkeys){
             info.set(k, data[k]);
         }
         info.setAuthor(author)
         await info.save()
-        return msg;
+    }
+
+    // Edit an existing instance.
+    Info.prototype.edit = async function (data, author) {
+        // List of editable entry names.
+        const uptkeys = ['description', 'latitude', 'longitude', 'marker', 'source', 'image', 'optJSON'];
+        for(let k of uptkeys){
+            this.set(k, data[k]);
+        }
+        this.setAuthor(author)
+        await this.save()
+        return "success"
     }
 
     // Delete an existing info from the database.
     Info.delInfo = async function (infoid) {
         // List of editable entry names.
         const uptkeys = ['description', 'latitude', 'longitude', 'marker', 'source', 'image', 'optJSON'];
-        var info = await Info.findByPk(infoid)
+        let info = await Info.findByPk(infoid)
         if(!info)
-            return "Entrée inexistante."
-        await info.destroy();
-        return "Entrée Supprimée."
+            return "notfound"
+        await info.destroy()
+        return "success"
     }
 
     return Info;
