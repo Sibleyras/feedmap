@@ -8,15 +8,18 @@ var logger = require('morgan');
 var passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy;
 var session = require('express-session');
-var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var models = require('./models/index')(config)
-var indexRouter = require('./routes/index');
+var indexRouter = require('./routes/index')(models, passport);
 var apiRouter = require('./routes/genapi')(models.sequelize);
 var usersRouter = require('./routes/users')(models, passport);
 var infosRouter = require('./routes/infos')(models);
 
 var app = express();
+
+// Allow CORS requests.
+app.use(cors({credentials: true, origin: 'http://localhost:8080'}))
 
 // Set LocalStrategy for authentication.
 passport.use(new LocalStrategy(
@@ -58,9 +61,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
-app.use('/login', usersRouter);
 app.use('/api', apiRouter);
 app.use('/api', infosRouter);
+app.use('/api', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -7,10 +7,10 @@ block content
             .col-4
                 p #{u.username}
             .col-1
-                if u.editor
-                    button(type='button' class='btn btn-secondary' onclick='$.post("/login/switchright", {username:"'+ u.username +'"}, function(data){window.location.reload(true)})') E
-                else
-                    button(type='button' class='btn btn-secondary' onclick='$.post("/login/switchright", {username:"'+ u.username +'"}, function(data){window.location.reload(true)})') x
+                button(type='button'
+                class='btn btn-secondary'
+                onclick='$.ajax({ url:"/api/user/editor/'+u.id+'", type: "PUT", success: function(data){window.location.reload(true)}})'
+                ) #{u.editor ? 'E' : 'x'}
             .col-1
                 if u.superadmin
                     p S

@@ -79,6 +79,7 @@ module.exports = (sequelize, DataTypes) => {
         }
         info.setAuthor(author)
         await info.save()
+        return "success"
     }
 
     // Edit an existing instance.
@@ -95,8 +96,6 @@ module.exports = (sequelize, DataTypes) => {
 
     // Delete an existing info from the database.
     Info.delInfo = async function (infoid) {
-        // List of editable entry names.
-        const uptkeys = ['description', 'latitude', 'longitude', 'marker', 'source', 'image', 'optJSON'];
         let info = await Info.findByPk(infoid)
         if(!info)
             return "notfound"

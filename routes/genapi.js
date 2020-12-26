@@ -14,5 +14,11 @@ module.exports = (sequelize) => {
     res.send(ts[0][0]["CURRENT_TIMESTAMP"]);
   });
 
+  /* GET paths to marker icons. */
+  router.get("/markers", async function (req, res, next) {
+    let marker = require('../public/images/marker.json')
+    res.json(marker);
+  });
+
   return router;
 };

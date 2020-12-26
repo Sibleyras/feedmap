@@ -77,7 +77,7 @@ class Info {
     source.appendChild(link);
 
     //icon box.
-    var iconpath = markerspath + iconUrls[this.info["marker"]];
+    var iconpath = iconUrls[this.info["marker"]];
     var iconbox = document.createElement("div");
     var iconimg = document.createElement("img");
     iconimg.classList.add("infoicon");
@@ -161,7 +161,7 @@ class Info {
     pickerbox.appendChild(pickimg);
     this.setMarker = function (t) {
       pickerbutton.innerHTML = t;
-      pickimg.src = markerspath + iconUrls[t];
+      pickimg.src = iconUrls[t];
     };
 
     var srcbox = document.createElement("div");
@@ -254,7 +254,7 @@ class Info {
 
     var delbutton = document.createElement("button");
     delbutton.classList.add(...["btn", "btn-outline-danger"]);
-    delbutton.innerHTML = "Suprimer !";
+    delbutton.innerHTML = "Supprimer !";
     delbutton.addEventListener("click", () => this.supprFromDB());
 
     var buttdiv = document.createElement("div");
@@ -295,7 +295,7 @@ class Info {
 
       var b = document.createElement("img");
       b.classList.add("infoicon");
-      b.src = markerspath + iconUrls[type];
+      b.src = iconUrls[type];
 
       selectbox.appendChild(b);
       selectbox.appendChild(a);

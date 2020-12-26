@@ -5,42 +5,43 @@ module.exports = (models, passport) => {
   const User = models["User"];
 
   // Simple login form.
-  router.get("/", function (req, res, next) {
+  router.get("/login", function (req, res, next) {
     res.render("login", {
       user: req.user,
     });
   });
 
   // Treat the login form with passport authenticate.
-  router.post("/", async function (req, res, next) {
+  router.post("/login", async function (req, res, next) {
     passport.authenticate("local", async function (err, user, info) {
       if (!user) {
-        return res.render("login", {
-          user: req.user,
-          err: "Mauvais username/password.",
-        });
+        return res.send("Mauvais username/password.");
       }
       req.login(user, function (err) {
         if (err) {
           return next(err);
         }
-        if (user.superadmin) {
-          return res.redirect("/login/admin");
-        }
-        return res.redirect("/");
+        res.send("success");
       });
     })(req, res, next);
   });
 
+  // Logout.
+  router.get("/logout", function (req, res) {
+    req.logout();
+    console.log("logged out");
+    return res.send("success");
+  });
+
   // Change password
-  router.get("/chgpwd", function (req, res, next) {
+  router.get("/login/chgpwd", function (req, res, next) {
     res.render("changepassword", {
       err: req.error,
     });
   });
 
   // Treat the change password form.
-  router.post("/chgpwd", async function (req, res, next) {
+  router.put("/login/chgpwd", async function (req, res, next) {
     if (
       !(
         req.body.username &&
@@ -49,31 +50,31 @@ module.exports = (models, passport) => {
         req.body.newpass2
       )
     ) {
-      return res.render("changepassword", {
-        err: "Remplissez tous les champs",
-      });
+      return res.send("Remplissez tous les champs")
     }
     passport.authenticate("local", async function (err, user, info) {
       if (!user) {
-        return res.render("changepassword", {
-          err: "Mauvais username/password.",
-        });
+        return res.send("Mauvais username/password.")
       }
       if (req.body.newpass != req.body.newpass2) {
-        return res.render("changepassword", {
-          err: "mots de passe différents.",
-        });
+        return res.send("mots de passe différents.")
       }
       user.setPassword(req.body.newpass);
       await user.save();
-      return res.render("changepassword", {
-        err: "Mot de Passe modifé !",
-      });
+      return res.send("success")
     })(req, res, next);
   });
 
-  /* GET users listing and add new. */
-  router.get("/admin", async function (req, res, next) {
+  /* GET current logged user. */
+  router.get("/user", async function (req, res, next) {
+    if (!req.user) {
+      return res.status(403).send("ACCESS DENIED");
+    }
+    return res.json(req.user);
+  });
+
+  /* GET users listing. */
+  router.get("/users", async function (req, res, next) {
     if (!req.user || !req.user.superadmin) {
       res.status(403).send("ACCESS DENIED");
       return;
@@ -84,20 +85,23 @@ module.exports = (models, passport) => {
     } catch (err) {
       return res.status(500).send("Error -> " + err);
     }
-    res.render("admin", {
-      user: req.user,
+    res.json({
       userlist: userlist,
     });
   });
 
-  // Add a new user with editor rights.
-  router.post("/addeditor", async function (req, res, next) {
+  // Add a new user.
+  router.post("/user", async function (req, res, next) {
     if (!req.user || !req.user.superadmin) {
       return res.status(403).send("ACCESS DENIED");
     }
+    let u = await User.findByUsername(req.body.username, (err, user) => {
+      return user;
+    });
+    if (u) return res.send("Username already in use");
     u = User.build({
       username: req.body.username,
-      editor: true,
+      editor: false,
     });
     u.setPassword(req.body.password);
     try {
@@ -105,21 +109,37 @@ module.exports = (models, passport) => {
     } catch (err) {
       return res.status(500).send("Error -> " + err);
     }
-    res.redirect("/login/admin");
+    res.send("success");
   });
 
   // switch the editor right.
-  router.post("/switchright", async function (req, res, next) {
+  router.put("/user/editor/:userId([0-9]+)", async function (req, res, next) {
     if (!req.user || !req.user.superadmin) {
       return res.status(403).send("ACCESS DENIED");
     }
-    await User.findByUsername(req.body.username, async function (err, user) {
-      if (user) {
-        user.editor = !user.editor;
-        await user.save();
-      }
-    });
-    res.send("done");
+    let user = await User.findByPk(req.params.userId);
+    if (user) {
+      user.editor = !user.editor;
+      await user.save();
+    }
+    res.send("success");
+  });
+
+  /* DELETE user. */
+  router.delete("/user/:userId([0-9]+)", async function (req, res, next) {
+    if (!req.user || !req.user.superadmin) {
+      return res.status(403).send("You do not have rights to edit.");
+    }
+    if (!req.params.userId) {
+      return res.send("Veuillez fournir l'ID");
+    }
+    let msg;
+    try {
+      msg = await User.delUser(req.params.userId);
+    } catch (err) {
+      return res.status(500).send("Error -> " + err);
+    }
+    res.send(msg);
   });
 
   return router;
