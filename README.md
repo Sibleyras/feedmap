@@ -1,10 +1,9 @@
-# FeedMap
+# BackEnd for the FeedMap project.
 
 A simple map with an editable feed to display information and locate them easily.
 
-BackEnd: NodeJS, Express.
-
-FrontEnd: Javascript.
+Built with Express.
+Sister frontend: https://github.com/Sibleyras/feedmap-frontend
 
 ## Installation
 - Download Source
@@ -21,4 +20,4 @@ FrontEnd: Javascript.
 
 - run ``npm start``
 
-- go to _localhost:3000/login/chgpwd_, username/password is admin/admin and set a new password for superadmin.
+- Go to _wesite.com/login/chgpwd_, username/password is admin/admin and set a new password for superadmin.
